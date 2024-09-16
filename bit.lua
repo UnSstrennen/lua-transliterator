@@ -29,6 +29,8 @@ Under the MIT license.
 copyright(c) 2006~2007 hanzhao (abrash_han@hotmail.com)
 --]]---------------
 
+require('math')
+
 do
 
 ------------------------
@@ -51,7 +53,7 @@ local function to_bits(n)
  local tbl = {}
  local cnt = 1
  while (n > 0) do
-  local last = math.mod(n,2)
+  local last = math.fmod(n,2)
   if(last == 1) then
    tbl[cnt] = 1
   else
@@ -65,7 +67,7 @@ local function to_bits(n)
 end
 
 local function tbl_to_number(tbl)
- local n = table.getn(tbl)
+ local n = #tbl
 
  local rslt = 0
  local power = 1
@@ -80,7 +82,7 @@ end
 local function expand(tbl_m, tbl_n)
  local big = {}
  local small = {}
- if(table.getn(tbl_m) > table.getn(tbl_n)) then
+ if(#tbl_m > #tbl_n) then
   big = tbl_m
   small = tbl_n
  else
@@ -88,7 +90,7 @@ local function expand(tbl_m, tbl_n)
   small = tbl_m
  end
  -- expand small
- for i = table.getn(small) + 1, table.getn(big) do
+ for i = #small + 1, #big do
   small[i] = 0
  end
 
@@ -100,7 +102,7 @@ local function bit_or(m, n)
  expand(tbl_m, tbl_n)
 
  local tbl = {}
- local rslt = math.max(table.getn(tbl_m), table.getn(tbl_n))
+ local rslt = math.max(#tbl_m, #tbl_n)
  for i = 1, rslt do
   if(tbl_m[i]== 0 and tbl_n[i] == 0) then
    tbl[i] = 0
@@ -118,7 +120,7 @@ local function bit_and(m, n)
  expand(tbl_m, tbl_n) 
 
  local tbl = {}
- local rslt = math.max(table.getn(tbl_m), table.getn(tbl_n))
+ local rslt = math.max(#tbl_m, #tbl_n)
  for i = 1, rslt do
   if(tbl_m[i]== 0 or tbl_n[i] == 0) then
    tbl[i] = 0
@@ -133,7 +135,7 @@ end
 local function bit_not(n)
  
  local tbl = to_bits(n)
- local size = math.max(table.getn(tbl), 32)
+ local size = math.max(#tbl, 32)
  for i = 1, size do
   if(tbl[i] == 1) then 
    tbl[i] = 0
@@ -150,7 +152,7 @@ local function bit_xor(m, n)
  expand(tbl_m, tbl_n) 
 
  local tbl = {}
- local rslt = math.max(table.getn(tbl_m), table.getn(tbl_n))
+ local rslt = math.max(#tbl_m, #tbl_n)
  for i = 1, rslt do
   if(tbl_m[i] ~= tbl_n[i]) then
    tbl[i] = 1
@@ -245,16 +247,3 @@ for i = 1, 100 do
  end
 end
 --]]
-
-
-
-
-
-
-
-
-
-
-
-
-
