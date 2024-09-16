@@ -1,11 +1,4 @@
---[[ 
-Transliterator class for Lua v0.0.1.
-
-This class based on code of Drupal transliteration module: https://drupal.org/project/transliteration
-
-Author - Roman Arkharov arkharov@gmail.com
-(C) 2013
-]]
+require('bit')
 
 Transliterator = {}
 
